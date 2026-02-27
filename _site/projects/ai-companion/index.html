@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Build Your Own AI Companion | My Adventures With Claude</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="/" class="site-title">My Adventures With Claude</a>
+      <ul>
+        <li><a href="/buy/">Buy the Book</a></li>
+        <li><a href="/projects/">Projects</a></li>
+        <li><a href="/aiforall/">AI for All</a></li>
+        <li><a href="/references/">References</a></li>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Build Your Own AI Companion</h1>
+<p>Turn a stuffed animal, action figure, Barbie, G.I. Joe, or any beloved object into a talking AI companion. This project combines hardware tinkering with AI to create something personal, private, and entirely yours.</p>
+<h2>Why Build Your Own?</h2>
+<p>Commercial AI companion apps exist, but they come with concerns:</p>
+<ul>
+<li><strong>Privacy</strong>: Your conversations go to corporate servers</li>
+<li><strong>Cost</strong>: Subscription fees add up</li>
+<li><strong>Control</strong>: The company decides what the AI can say and do</li>
+<li><strong>Dependency</strong>: The service can change or disappear</li>
+</ul>
+<p>Building your own means:</p>
+<ul>
+<li><strong>Your data stays local</strong> (if you use a local LLM)</li>
+<li><strong>One-time cost</strong> for hardware</li>
+<li><strong>Full control</strong> over personality and behavior</li>
+<li><strong>It's yours forever</strong></li>
+</ul>
+<p>Plus, there's something magical about a physical object that talks back.</p>
+<hr>
+<h2>What You'll Need</h2>
+<h3>Hardware (Basic Setup: ~$75-150)</h3>
+<ul>
+<li>
+<p><strong>Raspberry Pi 4 or 5</strong> (~$35-80)</p>
+<ul>
+<li>The brain of your companion</li>
+<li>Pi 5 recommended for faster local AI, but Pi 4 works fine with cloud APIs</li>
+</ul>
+</li>
+<li>
+<p><strong>USB Microphone</strong> (~$10-20)</p>
+<ul>
+<li>Any basic USB mic works</li>
+<li>Lapel mics are small and easy to hide inside a stuffed animal</li>
+</ul>
+</li>
+<li>
+<p><strong>Small Speaker</strong> (~$10-20)</p>
+<ul>
+<li>USB or 3.5mm audio jack</li>
+<li>Look for compact speakers that fit inside your chosen object</li>
+</ul>
+</li>
+<li>
+<p><strong>MicroSD Card</strong> (32GB+, ~$10)</p>
+<ul>
+<li>For the Raspberry Pi operating system and software</li>
+</ul>
+</li>
+<li>
+<p><strong>Power Supply</strong></p>
+<ul>
+<li>Official Raspberry Pi power supply recommended</li>
+<li>Or a USB battery pack for portability</li>
+</ul>
+</li>
+</ul>
+<h3>The &quot;Body&quot;</h3>
+<p>Choose something meaningful:</p>
+<ul>
+<li>A childhood stuffed animal</li>
+<li>An action figure (drill a small hole for the speaker)</li>
+<li>A decorative object (lamp, sculpture, etc.)</li>
+<li>A custom 3D-printed enclosure</li>
+<li>Even a cardboard box decorated by a child</li>
+</ul>
+<p>The only requirements: room for the speaker and microphone, and a way to run wires (or hide the Pi nearby).</p>
+<h3>Software (Free)</h3>
+<ul>
+<li><strong>Raspberry Pi OS</strong> (free)</li>
+<li><strong>Speech-to-text</strong>: Whisper (local) or cloud API</li>
+<li><strong>AI brain</strong>:
+<ul>
+<li>Local: Ollama with a small model like Phi-3 or Mistral 7B</li>
+<li>Cloud: Claude, ChatGPT, or other API (requires internet, small per-use cost)</li>
+</ul>
+</li>
+<li><strong>Text-to-speech</strong>: Piper (local) or cloud API</li>
+</ul>
+<hr>
+<h2>Basic Architecture</h2>
+<pre><code>[Microphone] → [Speech-to-Text] → [AI Model] → [Text-to-Speech] → [Speaker]
+</code></pre>
+<ol>
+<li>You speak into the microphone</li>
+<li>Speech-to-text converts your words to text</li>
+<li>The text goes to an AI model, which generates a response</li>
+<li>Text-to-speech converts the response to audio</li>
+<li>The speaker plays the response</li>
+</ol>
+<p>All of this can run locally on the Pi, or you can use cloud services for better quality (with internet required).</p>
+<hr>
+<h2>Step-by-Step Setup</h2>
+<h3>1. Set Up Your Raspberry Pi</h3>
+<ol>
+<li>Download <a href="https://www.raspberrypi.com/software/">Raspberry Pi Imager</a></li>
+<li>Flash Raspberry Pi OS to your SD card</li>
+<li>Boot up, connect to WiFi, update the system:<pre><code>sudo apt update &amp;&amp; sudo apt upgrade -y
+</code></pre>
+</li>
+</ol>
+<h3>2. Install Audio Dependencies</h3>
+<pre><code class="language-bash">sudo apt install -y python3-pip portaudio19-dev python3-pyaudio
+pip3 install sounddevice numpy
+</code></pre>
+<p>Test your microphone and speaker:</p>
+<pre><code class="language-bash">arecord -d 5 test.wav  # Record 5 seconds
+aplay test.wav          # Play it back
+</code></pre>
+<h3>3. Choose Your AI Setup</h3>
+<p><strong>Option A: Fully Local (Private, No Internet Needed)</strong></p>
+<p>Install Ollama:</p>
+<pre><code class="language-bash">curl -fsSL https://ollama.com/install.sh | sh
+ollama pull phi3  # Small, fast model
+</code></pre>
+<p>Install Whisper for speech-to-text:</p>
+<pre><code class="language-bash">pip3 install openai-whisper
+</code></pre>
+<p>Install Piper for text-to-speech:</p>
+<pre><code class="language-bash">pip3 install piper-tts
+</code></pre>
+<p><strong>Option B: Cloud APIs (Better Quality, Requires Internet)</strong></p>
+<p>Sign up for API keys:</p>
+<ul>
+<li><a href="https://platform.openai.com/">OpenAI</a> (for Whisper STT and ChatGPT)</li>
+<li><a href="https://console.anthropic.com/">Anthropic</a> (for Claude)</li>
+<li><a href="https://elevenlabs.io/">ElevenLabs</a> (for high-quality voices)</li>
+</ul>
+<h3>4. Write the Glue Code</h3>
+<p>A basic Python script that ties everything together:</p>
+<pre><code class="language-python"># companion.py - Basic structure
+import sounddevice as sd
+import numpy as np
+# ... (full code available in our GitHub repository)
+
+def listen():
+    # Record audio from microphone
+    pass
+
+def transcribe(audio):
+    # Convert speech to text
+    pass
+
+def think(text):
+    # Send to AI, get response
+    pass
+
+def speak(text):
+    # Convert text to speech, play it
+    pass
+
+# Main loop
+while True:
+    audio = listen()
+    user_text = transcribe(audio)
+    response = think(user_text)
+    speak(response)
+</code></pre>
+<p><em>(Full working code available in our GitHub repository — link coming soon)</em></p>
+<h3>5. Customize the Personality</h3>
+<p>The magic is in the system prompt. Tell the AI who it is:</p>
+<pre><code>You are Whiskers, a wise and gentle stuffed cat who belongs to Emma.
+You've been her companion since she was three years old. You speak
+in a calm, reassuring voice. You remember your adventures together
+and love hearing about her day. You occasionally purr when happy.
+</code></pre>
+<p>Or for a different vibe:</p>
+<pre><code>You are Commander Rex, a battle-worn action figure who has seen
+things. You speak in short, tactical sentences. You're protective
+of your owner and always ready for the next mission. You sometimes
+mutter about &quot;the old campaigns.&quot;
+</code></pre>
+<h3>6. Assemble the Physical Companion</h3>
+<ol>
+<li>Find or create a cavity for the electronics</li>
+<li>Position the microphone near where the &quot;ear&quot; would be</li>
+<li>Position the speaker near the &quot;mouth&quot;</li>
+<li>Run power cable discretely (or use battery pack)</li>
+<li>Test and adjust volume levels</li>
+</ol>
+<hr>
+<h2>Tips for Success</h2>
+<p><strong>Start simple.</strong> Get it working with cloud APIs first, then move to local if you want privacy.</p>
+<p><strong>Use a wake word.</strong> Instead of always listening, have it activate on &quot;Hey Whiskers&quot; or similar. Saves processing power and feels more natural.</p>
+<p><strong>Add memory.</strong> Store conversation history in a text file so your companion remembers previous chats.</p>
+<p><strong>Consider safety.</strong> If children will use it, review the AI's responses. Local models can be fine-tuned to be more appropriate.</p>
+<p><strong>Make it robust.</strong> Add error handling so it responds gracefully when something goes wrong (&quot;I didn't quite catch that, could you say it again?&quot;).</p>
+<hr>
+<h2>Going Further</h2>
+<ul>
+<li><strong>Add LED eyes</strong> that light up when listening or speaking</li>
+<li><strong>Use a servo motor</strong> so it can turn toward your voice</li>
+<li><strong>Build multiple companions</strong> that can &quot;talk&quot; to each other</li>
+<li><strong>Create a web interface</strong> to adjust personality settings</li>
+<li><strong>Add long-term memory</strong> with a local database</li>
+</ul>
+<hr>
+<h2>Resources</h2>
+<ul>
+<li><a href="https://www.raspberrypi.com/documentation/">Raspberry Pi Documentation</a></li>
+<li><a href="https://ollama.com/">Ollama</a> — Easy local LLM hosting</li>
+<li><a href="https://github.com/rhasspy/piper">Piper TTS</a> — Fast local text-to-speech</li>
+<li><a href="https://github.com/openai/whisper">OpenAI Whisper</a> — Speech-to-text</li>
+</ul>
+<hr>
+<h2>From the Book</h2>
+<p>This project is referenced in <strong>Chapter 7: Finding Love in a Language Model</strong>, which discusses the appeal and risks of AI companions. Building your own is a healthier alternative to commercial companion apps — you control the data, the personality, and the relationship.</p>
+<p>It's also just really fun.</p>
+
+  </main>
+
+  <footer>
+    <p>&copy; 2026 My Adventures With Claude. All rights reserved.</p>
+  </footer>
+</body>
+</html>

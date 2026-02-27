@@ -1,0 +1,285 @@
+/* My Adventures With Claude - Website Styles */
+/* Colors inspired by claudebox (pink) and mebox (blue) from the book */
+
+:root {
+  --claude-pink: #fce4ec;
+  --claude-pink-dark: #f8bbd9;
+  --me-blue: #e3f2fd;
+  --me-blue-dark: #bbdefb;
+  --text-dark: #333;
+  --text-light: #666;
+  --background: #fafafa;
+  --white: #fff;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--text-dark);
+  background-color: var(--background);
+}
+
+/* Header and Navigation */
+header {
+  background-color: var(--white);
+  border-bottom: 3px solid var(--claude-pink-dark);
+  padding: 1rem 2rem;
+}
+
+nav {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.site-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--text-dark);
+  text-decoration: none;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+nav a {
+  color: var(--text-dark);
+  text-decoration: none;
+  padding: 0.25rem 0;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.2s;
+}
+
+nav a:hover {
+  border-bottom-color: var(--claude-pink-dark);
+}
+
+/* Main Content */
+main {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: var(--white);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+h1, h2, h3 {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: var(--text-dark);
+}
+
+h2 {
+  font-size: 1.75rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: var(--text-dark);
+}
+
+h3 {
+  font-size: 1.25rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+p {
+  margin-bottom: 1rem;
+}
+
+a {
+  color: #1976d2;
+}
+
+a:hover {
+  color: #1565c0;
+}
+
+/* Lists */
+ul, ol {
+  margin-bottom: 1rem;
+  padding-left: 2rem;
+}
+
+li {
+  margin-bottom: 0.5rem;
+}
+
+/* Project cards */
+.project-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.project-list li {
+  background-color: var(--me-blue);
+  padding: 1rem 1.5rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  border-left: 4px solid var(--me-blue-dark);
+}
+
+.project-list a {
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.project-list a:hover {
+  text-decoration: underline;
+}
+
+/* Buy buttons */
+.buy-links {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin: 2rem 0;
+}
+
+.buy-button {
+  display: inline-block;
+  padding: 1rem 2rem;
+  background-color: var(--claude-pink);
+  border: 2px solid var(--claude-pink-dark);
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--text-dark);
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.buy-button:hover {
+  background-color: var(--claude-pink-dark);
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+/* Hero section */
+.hero {
+  display: flex;
+  gap: 2.5rem;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+}
+
+.hero-image img {
+  width: 240px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  border-radius: 4px;
+}
+
+.hero-content {
+  flex: 1;
+}
+
+.hero-content h1 {
+  margin-top: 0;
+}
+
+.tagline {
+  font-size: 1.1rem;
+  color: var(--text-light);
+  font-style: italic;
+  margin-bottom: 1.5rem;
+  line-height: 1.7;
+}
+
+@media (max-width: 600px) {
+  .hero {
+    flex-direction: column;
+  }
+  .hero-image img {
+    width: 100%;
+    max-width: 280px;
+  }
+}
+
+/* Dialog boxes - matching book's claudebox/mebox */
+.claudebox {
+  background-color: var(--claude-pink);
+  border-left: 4px solid var(--claude-pink-dark);
+  padding: 1rem 1.5rem;
+  margin: 1.5rem 0;
+  border-radius: 0 8px 8px 0;
+}
+
+.claudebox::before {
+  content: "Claude:";
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.mebox {
+  background-color: var(--me-blue);
+  border-left: 4px solid var(--me-blue-dark);
+  padding: 1rem 1.5rem;
+  margin: 1.5rem 0;
+  border-radius: 0 8px 8px 0;
+}
+
+.mebox::before {
+  content: "Me:";
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.teresabox {
+  background-color: var(--me-blue);
+  border-left: 4px solid var(--me-blue-dark);
+  padding: 1rem 1.5rem;
+  margin: 1.5rem 0;
+  border-radius: 0 8px 8px 0;
+}
+
+.teresabox::before {
+  content: "Teresa:";
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  main {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  nav ul {
+    gap: 1rem;
+  }
+}

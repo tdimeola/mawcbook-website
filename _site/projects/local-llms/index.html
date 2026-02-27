@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Run LLMs Locally | My Adventures With Claude</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="/" class="site-title">My Adventures With Claude</a>
+      <ul>
+        <li><a href="/buy/">Buy the Book</a></li>
+        <li><a href="/projects/">Projects</a></li>
+        <li><a href="/aiforall/">AI for All</a></li>
+        <li><a href="/references/">References</a></li>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Run LLMs Locally</h1>
+<p>For those who want privacy, offline access, or just the satisfaction of running your own AI. We'll walk you through setting up Ollama, llama.cpp, or similar tools.</p>
+<h2>Why Run AI Locally?</h2>
+<p>When you use Claude, ChatGPT, or other cloud AI:</p>
+<ul>
+<li>Your conversations go to a server</li>
+<li>You need an internet connection</li>
+<li>There are usage limits</li>
+<li>The service could change or disappear</li>
+</ul>
+<p>Running AI locally means:</p>
+<ul>
+<li>Complete privacy: nothing leaves your computer</li>
+<li>Offline access: use AI without internet</li>
+<li>No limits: run as many queries as you want</li>
+<li>Learning: understand how these systems actually work</li>
+</ul>
+<h2>What You'll Need</h2>
+<h3>Hardware Requirements</h3>
+<p><strong>Minimum (for small models):</strong></p>
+<ul>
+<li>8GB RAM</li>
+<li>Any modern CPU</li>
+<li>Works on most laptops from the last 5 years</li>
+</ul>
+<p><strong>Recommended (for better models):</strong></p>
+<ul>
+<li>16GB+ RAM</li>
+<li>Modern CPU with good single-thread performance</li>
+<li>SSD for storage</li>
+</ul>
+<p><strong>For best results:</strong></p>
+<ul>
+<li>32GB+ RAM, or</li>
+<li>A gaming GPU with 8GB+ VRAM (NVIDIA works best)</li>
+</ul>
+<p>Don't have powerful hardware? Start with smaller models. They're surprisingly capable.</p>
+<h2>The Easiest Path: Ollama</h2>
+<p>Ollama is the simplest way to run AI locally. It handles all the technical details.</p>
+<h3>Installing Ollama</h3>
+<p><strong>Mac:</strong></p>
+<ol>
+<li>Go to <a href="https://ollama.ai">ollama.ai</a></li>
+<li>Download the Mac app</li>
+<li>Install and run it</li>
+</ol>
+<p><strong>Windows:</strong></p>
+<ol>
+<li>Go to <a href="https://ollama.ai">ollama.ai</a></li>
+<li>Download the Windows installer</li>
+<li>Run the installer</li>
+</ol>
+<p><strong>Linux:</strong></p>
+<pre><code>curl -fsSL https://ollama.ai/install.sh | sh
+</code></pre>
+<h3>Your First Local Model</h3>
+<p>Open a terminal (Command Prompt on Windows, Terminal on Mac) and type:</p>
+<pre><code>ollama run llama3.2
+</code></pre>
+<p>Ollama will download the model (a few GB) and start it. Then you can chat:</p>
+<pre><code>&gt;&gt;&gt; Hello! What can you help me with?
+</code></pre>
+<p>That's it. You're running AI on your own computer.</p>
+<h3>Popular Models to Try</h3>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Size</th>
+<th>Good For</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>llama3.2</td>
+<td>2GB</td>
+<td>General chat, fast responses</td>
+</tr>
+<tr>
+<td>llama3.1:8b</td>
+<td>4.5GB</td>
+<td>Better quality, still fast</td>
+</tr>
+<tr>
+<td>mistral</td>
+<td>4GB</td>
+<td>Concise, efficient responses</td>
+</tr>
+<tr>
+<td>codellama</td>
+<td>4GB</td>
+<td>Programming help</td>
+</tr>
+<tr>
+<td>phi3</td>
+<td>2GB</td>
+<td>Lightweight, good for testing</td>
+</tr>
+</tbody>
+</table>
+<p>Try different models:</p>
+<pre><code>ollama run mistral
+ollama run codellama
+</code></pre>
+<h3>Managing Models</h3>
+<p><strong>List installed models:</strong></p>
+<pre><code>ollama list
+</code></pre>
+<p><strong>Remove a model:</strong></p>
+<pre><code>ollama rm modelname
+</code></pre>
+<p><strong>Pull a model without running:</strong></p>
+<pre><code>ollama pull modelname
+</code></pre>
+<h2>Using a Chat Interface</h2>
+<p>The command line works, but you might want a nicer interface.</p>
+<h3>Open WebUI</h3>
+<p>A beautiful web interface for Ollama:</p>
+<ol>
+<li>Make sure Ollama is running</li>
+<li>Install Docker Desktop (<a href="https://docker.com">docker.com</a>)</li>
+<li>Run:</li>
+</ol>
+<pre><code>docker run -d -p 3000:8080 --add-host=host.docker.internal:host-gateway -v open-webui:/app/backend/data --name open-webui ghcr.io/open-webui/open-webui:main
+</code></pre>
+<ol start="4">
+<li>Open your browser to <code>http://localhost:3000</code></li>
+</ol>
+<p>Now you have a ChatGPT-like interface for your local models.</p>
+<h3>Other Options</h3>
+<ul>
+<li><strong>LM Studio</strong> (<a href="https://lmstudio.ai">lmstudio.ai</a>) - Standalone app with nice UI</li>
+<li><strong>GPT4All</strong> (<a href="https://gpt4all.io">gpt4all.io</a>) - Simple desktop app</li>
+<li><strong>Jan</strong> (<a href="https://jan.ai">jan.ai</a>) - Clean, modern interface</li>
+</ul>
+<h2>Understanding Model Sizes</h2>
+<p>Models come in different sizes, measured in parameters (billions):</p>
+<ul>
+<li><strong>1-3B parameters:</strong> Fast, runs on anything, limited capability</li>
+<li><strong>7-8B parameters:</strong> Good balance, needs decent RAM</li>
+<li><strong>13B parameters:</strong> Better quality, needs 16GB+ RAM</li>
+<li><strong>70B parameters:</strong> Near cloud-quality, needs 64GB+ RAM or good GPU</li>
+</ul>
+<p>For most people, 7-8B models are the sweet spot.</p>
+<h2>What Local AI Can Do</h2>
+<p><strong>Works well:</strong></p>
+<ul>
+<li>General conversation</li>
+<li>Writing help</li>
+<li>Code assistance</li>
+<li>Brainstorming</li>
+<li>Summarization</li>
+<li>Simple analysis</li>
+</ul>
+<p><strong>Limitations:</strong></p>
+<ul>
+<li>No internet access</li>
+<li>No image generation (usually)</li>
+<li>Smaller knowledge base than cloud models</li>
+<li>Slower than cloud (usually)</li>
+<li>Can't match GPT-4 quality (yet)</li>
+</ul>
+<h2>Privacy Considerations</h2>
+<p>Local AI is truly private:</p>
+<ul>
+<li>Conversations never leave your computer</li>
+<li>No logging by companies</li>
+<li>No training on your data</li>
+<li>No one knows what you're asking</li>
+</ul>
+<p>This matters for:</p>
+<ul>
+<li>Sensitive business information</li>
+<li>Personal matters</li>
+<li>Journaling or therapy-like conversations</li>
+<li>Anything you wouldn't want stored</li>
+</ul>
+<h2>Troubleshooting</h2>
+<p><strong>&quot;Not enough memory&quot;</strong>
+Try a smaller model, or close other applications.</p>
+<p><strong>&quot;Model downloads slowly&quot;</strong>
+Models are large. Be patient, or download during off-hours.</p>
+<p><strong>&quot;Responses are slow&quot;</strong>
+Normal for larger models. Try a smaller model, or consider a GPU upgrade.</p>
+<p><strong>&quot;Ollama won't start&quot;</strong>
+Make sure you don't have another instance running. Restart your computer.</p>
+<h2>Going Deeper</h2>
+<h3>Custom System Prompts</h3>
+<p>Create specialized versions of models:</p>
+<pre><code>ollama create myassistant -f ./Modelfile
+</code></pre>
+<p>Where <code>Modelfile</code> contains your customization.</p>
+<h3>API Access</h3>
+<p>Ollama provides an API at <code>localhost:11434</code>:</p>
+<pre><code>curl http://localhost:11434/api/generate -d '{
+  &quot;model&quot;: &quot;llama3.2&quot;,
+  &quot;prompt&quot;: &quot;Hello!&quot;
+}'
+</code></pre>
+<p>Use this to integrate local AI into scripts or applications.</p>
+<h3>Fine-tuning</h3>
+<p>For the truly ambitious: train models on your own data. This requires significant technical knowledge and hardware.</p>
+<h2>Comparison to Cloud AI</h2>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Local</th>
+<th>Cloud</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Privacy</td>
+<td>Complete</td>
+<td>Limited</td>
+</tr>
+<tr>
+<td>Cost</td>
+<td>Free after setup</td>
+<td>Subscription/usage</td>
+</tr>
+<tr>
+<td>Quality</td>
+<td>Good, not best</td>
+<td>State-of-the-art</td>
+</tr>
+<tr>
+<td>Speed</td>
+<td>Depends on hardware</td>
+<td>Fast</td>
+</tr>
+<tr>
+<td>Offline</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Updates</td>
+<td>Manual</td>
+<td>Automatic</td>
+</tr>
+</tbody>
+</table>
+<p>Many people use both: cloud AI for best quality, local AI for privacy-sensitive tasks.</p>
+<h2>Next Steps</h2>
+<p>Want to use AI for a major creative project? Try <a href="/projects/write-a-book/">Write a Book with AI</a> for an ambitious undertaking.</p>
+<p>Or explore <a href="/projects/curriculum-builder/">Build a Course Curriculum</a> to design your own learning path.</p>
+<p>Or browse all <a href="/projects/">Projects</a>.</p>
+
+  </main>
+
+  <footer>
+    <p>&copy; 2026 My Adventures With Claude. All rights reserved.</p>
+  </footer>
+</body>
+</html>
